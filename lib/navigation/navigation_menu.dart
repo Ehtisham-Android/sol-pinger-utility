@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sol_pinger_utility/Presentation/Pages/HomePage.dart';
+import 'package:sol_pinger_utility/presentation/Pages/home_screen.dart';
 import '../core/AppGlobals.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -20,7 +19,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
   void initState() {
     super.initState();
     list = [
-      const Homepage(),
+      const HomeScreen(),
       // const OrdersScreen(),
       // CartDetailsScreen(shopMore: onTap),
       // //const AccountScreen(),
