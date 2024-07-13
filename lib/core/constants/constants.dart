@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import '../Utils.dart';
@@ -67,6 +69,7 @@ class Urls {
 
 }
 
+const double REFRESH_DURATION = 5 * 60000; // 5 mins
 const String FREE_SHIPPING_CODE = "freeshipping_freeshipping";
 
 const String expressLogoString = '''

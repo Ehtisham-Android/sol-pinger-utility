@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sol_pinger_utility/presentation/Pages/home_screen.dart';
 import '../core/AppGlobals.dart';
+import '../presentation/Pages/add_url_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
@@ -20,11 +21,10 @@ class _NavigationMenuState extends State<NavigationMenu> {
     super.initState();
     list = [
       const HomeScreen(),
-      // const OrdersScreen(),
-      // CartDetailsScreen(shopMore: onTap),
-      // //const AccountScreen(),
-      // const MapSample(),
-      // const FifoAIScreen(),
+      const AddUrlScreen(),
+      // CartDetailsScreen(shopMore: onTap);
+      // const LogsScreen(),
+      // const SettingsScreen(),
     ];
   }
 
@@ -47,29 +47,23 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   : AppColors.grey_600),
           label: AppLocalizations.of(context)?.home),
       BottomNavigationBarItem(
-          icon: Icon(Icons.ad_units_rounded,
+          icon: Icon(Icons.link_outlined,
               color: _selectedIndex == 1
                   ? AppColors.turquoise
                   : AppColors.grey_600),
-          label: AppLocalizations.of(context)?.my_orders),
+          label: 'Urls'),
       BottomNavigationBarItem(
-          icon: Icon(Icons.add_shopping_cart,
+          icon: Icon(Icons.type_specimen,
               color: _selectedIndex == 2
                   ? AppColors.turquoise
                   : AppColors.grey_600),
-          label: AppLocalizations.of(context)?.cart),
+          label: 'Logs'),
       BottomNavigationBarItem(
-          icon: Icon(Icons.account_circle,
+          icon: Icon(Icons.settings,
               color: _selectedIndex == 3
                   ? AppColors.turquoise
                   : AppColors.grey_600),
-          label: AppLocalizations.of(context)?.account),
-      BottomNavigationBarItem(
-          icon: Icon(Icons.chat_rounded,
-              color: _selectedIndex == 4
-                  ? AppColors.turquoise
-                  : AppColors.grey_600),
-          label: AppLocalizations.of(context)?.fifo_ai)
+          label: 'Settings')
     ];
 
     return Scaffold(

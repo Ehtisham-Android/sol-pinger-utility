@@ -144,8 +144,8 @@
   "wallet_balance": "Wallet balance",
   "wallet_empty": "Wallet amount is less than the total order amount",
   "loading_fifo_ai": "Loading FIFO AI",
-  "start_conversation": "Start Conversation"
-
-
-
+  "start_conversation": "Start Conversation",
+  "urls": "Urls",
+  "logs": "Logs",
+  "settings": "Settings"
 }
