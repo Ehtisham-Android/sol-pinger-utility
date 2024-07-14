@@ -16,7 +16,7 @@ class UrlsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.all(Dimens.spaceMedium),
         itemCount: urls.length,

@@ -8,6 +8,7 @@ import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/tur
 
 import '../../core/AppGlobals.dart';
 import '../../core/constants/constants.dart';
+import '../../domain/entities/url.dart';
 import '../../locator.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +22,8 @@ class HomeScreenState extends State<HomeScreen> {
   PingData? _lastPing;
   final TextEditingController _controller =
   TextEditingController(text: 'google.com');
+  List<UrlEntity> urlsList = [];
+  final database = locator<DatabaseHelper>();
 
   void _startPing() {
     // Create instance of DartPing
@@ -33,8 +36,19 @@ class HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _getAllUrlsFromDB() async {
+    var urls = await database.getUrlsMapList();
+    for (int index = 0; index < urls.length; index++) {
+      urlsList.add(UrlEntity.fromJson(urls[index]));
+    }
+
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    _getAllUrlsFromDB();
+
     return Scaffold(
       appBar: AppBar(
         title: textOrangeXLarge('Sol Pinger Utility', bold: true),
@@ -49,7 +63,7 @@ class HomeScreenState extends State<HomeScreen> {
                 color: AppColors.beigeColor(context),
                 height:
                 CategoriesItemHeight.subCategoryHeight,
-                child: UrlsList()),
+                child: UrlsList(urlsList)),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextFormField(
