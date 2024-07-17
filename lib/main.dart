@@ -18,11 +18,8 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black.withOpacity(0.002)
-    )
-  );
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black.withOpacity(0.002)));
 
   await setupLocator();
   // await Firebase.initializeApp(
@@ -44,7 +41,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => locator<HomepageBloc>()),
+        BlocProvider(create: (_) => locator<HomePageBloc>()),
       ],
       child: ChangeNotifierProvider<LocaleModel>(
         create: (context) => LocaleModel(),

@@ -1,8 +1,14 @@
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:sol_pinger_utility/domain/use_cases/get_url_list.dart';
+import 'package:sol_pinger_utility/presentation/bloc/homepage/homepage_bloc.dart';
 
 import 'core/constants/app_shared_prefs.dart';
 import 'core/database/db_helper.dart';
+import 'data/data_sources/contracts/local/home_page_local_data_source.dart';
+import 'data/data_sources/local/implementations/home_page_local_data_source_impl.dart';
+import 'data/repositories/home_page_repository_impl.dart';
+import 'domain/repositories/home_page_repository.dart';
 
 final locator = GetIt.instance;
 
@@ -23,7 +29,7 @@ Future<void> setupLocator() async {
   // locator.registerFactory(() => PermissionsHelper());
 
   // bloc //////////////////////////////////////////////////////////////////////
-  // locator.registerFactory(() => SplashScreenBloc(locator()));
+  locator.registerFactory(() => HomePageBloc(locator()));
   // locator.registerFactory(() => WebsitesBloc(locator()));
   // locator.registerFactory(() => SendOtpBloc(locator()));
   // locator.registerFactory(() => LoginBloc(locator()));
@@ -55,8 +61,8 @@ Future<void> setupLocator() async {
   // locator.registerFactory(() => PlaceOrderBloc(locator()));
   //
   // // use case //////////////////////////////////////////////////////////////////
-  // locator.registerLazySingleton(
-  //     () => GetHomePageDataUseCase(homePageRepository: locator()));
+  locator.registerLazySingleton(
+      () => GetUrlListUseCase(homePageRepository: locator()));
   // locator.registerLazySingleton(
   //     () => GetWebsitesUseCase(websitesRepository: locator()));
   // locator.registerLazySingleton(
@@ -102,9 +108,9 @@ Future<void> setupLocator() async {
   //     () => PlaceOrderUseCase(placeOrderRepository: locator()));
   //
   // // repository ////////////////////////////////////////////////////////////////
-  // locator.registerLazySingleton<HomePageRepository>(
-  //   () => HomePageRepositoryImpl(homePageRemoteDataSource: locator()),
-  // );
+  locator.registerLazySingleton<HomePageRepository>(
+    () => HomePageRepositoryImpl(homePageLocalDataSource: locator()),
+  );
   //
   // locator.registerLazySingleton<WebsitesRepository>(
   //   () => WebsitesRepositoryImpl(websitesRemoteDataSource: locator()),
@@ -203,12 +209,12 @@ Future<void> setupLocator() async {
   // );
   //
   // // data source ///////////////////////////////////////////////////////////////
-  // locator.registerLazySingleton<HomePageRemoteDataSource>(
-  //   () => HomePageRemoteDataSourceImpl(
-  //     client: locator(),
-  //   ),
-  // );
-  //
+  locator.registerLazySingleton<HomePageLocalDataSource>(
+    () => HomePageLocalDataSourceImpl(
+      databaseHelper: locator(),
+    ),
+  );
+
   // locator.registerLazySingleton<WebsitesRemoteDataSource>(
   //   () => WebsitesRemoteDataSourceImpl(retrofitClient: locator()),
   // );

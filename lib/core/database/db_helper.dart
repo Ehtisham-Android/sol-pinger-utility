@@ -252,16 +252,16 @@ class DatabaseHelper {
   //   return cartItemList;
   // }
   //
-  // Future<List<CartItemQtyEntity>> getCartItemQtyList() async {
-  //   var cartItemQtyMapList = await getCartItemQtyMapList();
-  //   int count = cartItemQtyMapList.length;
-  //   List<CartItemQtyEntity> cartItemQtyList = [];
-  //   for (int index = 0; index < count; index++) {
-  //     cartItemQtyList.add(CartItemQtyEntity.fromJson(cartItemQtyMapList[index]));
-  //   }
-  //   return cartItemQtyList;
-  // }
-  //
+  Future<List<UrlEntity>> getUrlList() async {
+    var urlMapList = await getUrlsMapList();
+    int count = urlMapList.length;
+    List<UrlEntity> urlList = [];
+    for (int index = 0; index < count; index++) {
+      urlList.add(UrlEntity.fromJson(urlMapList[index]));
+    }
+    return urlList;
+  }
+
   Future<UrlEntity> getUrl(String id) async {
     var db = await database;
     var urls =

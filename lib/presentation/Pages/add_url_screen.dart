@@ -14,10 +14,10 @@ class AddUrlScreen extends StatefulWidget {
   const AddUrlScreen({super.key});
 
   @override
-  HomeScreenState createState() => HomeScreenState();
+  AddUrlScreenState createState() => AddUrlScreenState();
 }
 
-class HomeScreenState extends State<AddUrlScreen> {
+class AddUrlScreenState extends State<AddUrlScreen> {
   final TextEditingController _controller = TextEditingController(text: '');
 
   void _saveUrl(String url) async {

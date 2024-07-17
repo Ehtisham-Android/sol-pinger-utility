@@ -46,7 +46,7 @@ dependencies:
   provider: ^6.0.0
   http: ^1.0.0
   equatable: ^2.0.3
-#  dartz: ^0.10.1
+  dartz: ^0.10.1
   flutter_bloc: ^8.0.1
 #  rxdart: ^0.27.3
   get_it: ^7.2.0
