@@ -21,10 +21,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
     super.initState();
     list = [
       const HomeScreen(),
-      const AddUrlScreen(),
-      // CartDetailsScreen(shopMore: onTap);
-      // const LogsScreen(),
-      // const SettingsScreen(),
+      AddUrlScreen(goBack: onTap),
     ];
   }
 
