@@ -1,19 +1,12 @@
-import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sol_pinger_utility/core/database/db_helper.dart';
-import 'package:sol_pinger_utility/presentation/Pages/add_url_screen.dart';
-import 'package:sol_pinger_utility/presentation/Pages/urls_list.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/loading_indicator.dart';
-import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/text_styles.dart';
 import 'package:sol_pinger_utility/presentation/bloc/homepage/homepage_bloc.dart';
 import 'package:sol_pinger_utility/presentation/bloc/homepage/homepage_event.dart';
 import 'package:sol_pinger_utility/presentation/bloc/homepage/homepage_state.dart';
-
-import '../../core/AppGlobals.dart';
-import '../../core/constants/constants.dart';
-import '../../domain/entities/url.dart';
-import '../../locator.dart';
+import 'package:sol_pinger_utility/presentation/pages/homepage/urls_list.dart';
+import '../../../core/AppGlobals.dart';
+import '../../../core/constants/constants.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,11 +30,14 @@ class HomeScreen extends StatelessWidget {
 
           if (state is OnHomePageSuccess) {
             final urlList = state.result;
-            return SafeArea(child: UrlsList(urlList));
+            return SafeArea(
+                child: Padding(
+                    padding: const EdgeInsets.all(Dimens.screenPadding),
+                    child: UrlsList(urlList))
+            );
           }
 
           return Container();
-
         }
     );
   }

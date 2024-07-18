@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sol_pinger_utility/core/database/db_helper.dart';
 import 'package:sol_pinger_utility/domain/entities/url.dart';
 import 'package:sol_pinger_utility/locator.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/item_space.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/text_styles.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/turquoise_button.dart';
+import 'package:sol_pinger_utility/presentation/pages/widgets/helper_widgets/snack_bar.dart';
 
 import '../../core/AppGlobals.dart';
 import '../../core/constants/constants.dart';
@@ -24,7 +26,18 @@ class AddUrlScreenState extends State<AddUrlScreen> {
     // insert db record
     final dbHelper = locator<DatabaseHelper>();
     final urlEntity =
-        UrlEntity(id: 0, url: url, noOfTries: 3, isPeriodic: "1");
+        UrlEntity(
+            id: 0,
+            url: url,
+            noOfTries: 3,
+            isPeriodic: "1",
+            severity: '',
+            lastChecked: '',
+            status: '',
+            createdAt: '',
+            totalFailures: 0,
+            hitsSince: 0
+        );
     dbHelper.insertUrl(urlEntity);
 
     final urls = await dbHelper.getUrlsMapList();
@@ -82,21 +95,39 @@ class AddUrlScreenState extends State<AddUrlScreen> {
             ),
             vSpaceLarge(),
             Center(
-              child: TurquoiseButton(text: 'Save URL', onPressed: () async {
-                final dbHelper = locator<DatabaseHelper>();
-                final urlEntity = UrlEntity(url: _controller.text, noOfTries: 3, isPeriodic: "1");
-                await dbHelper.insertUrl(urlEntity);
+              child: TurquoiseButton(
+                  text: 'Save URL',
+                  onPressed: () async {
+                    final dbHelper = locator<DatabaseHelper>();
+                    DateTime now = DateTime.now();
+                    String date = DateFormat.yMMMEd().format(now);
+                    final urlEntity =
+                    UrlEntity(
+                        url: _controller.text,
+                        noOfTries: 3,
+                        isPeriodic: "1",
+                        severity: 'critical',
+                        lastChecked: '',
+                        status: 'Just added',
+                        createdAt: date,
+                        totalFailures: 0,
+                        hitsSince: 0
+                    );
+                    await dbHelper.insertUrl(urlEntity);
 
-                final urls = await dbHelper.getUrlsMapList();
-                List<UrlEntity> urlsList = [];
-                for (int index = 0; index < urls.length; index++) {
-                  urlsList.add(UrlEntity.fromJson(urls[index]));
-                }
+                    final urls = await dbHelper.getUrlsMapList();
+                    List<UrlEntity> urlsList = [];
+                    for (int index = 0; index < urls.length; index++) {
+                      urlsList.add(UrlEntity.fromJson(urls[index]));
+                    }
 
-                if (kDebugMode) {
-                  print("Ehtisham: ${urlsList.toString()}");
-                }
+                    WidgetsBinding.instance.addPostFrameCallback((_) {
+                      showSnackBar(context, "${_controller.text} added successfully!");
+                    });
 
+                    if (kDebugMode) {
+                      print("Ehtisham: ${urlsList.toString()}");
+                    }
               }),
             ),
           ],

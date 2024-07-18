@@ -4,6 +4,7 @@ import 'Utils.dart';
 
 class AppColors {
   static const turquoise = Color(0xff45bda0);
+  static const green = Color(0xff3c9432);
   static const turquoiseVariant = Color(0xff456fbd);
   static const paleOrange = Color(0xffDDBB41);
   static const paleOrangeVariant = Color(0xffffc803);

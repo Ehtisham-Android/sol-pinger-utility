@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:sol_pinger_utility/presentation/Pages/home_screen.dart';
 import '../core/AppGlobals.dart';
 import '../presentation/Pages/add_url_screen.dart';
+import '../presentation/pages/homepage/home_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});

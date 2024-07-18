@@ -18,6 +18,13 @@ class DatabaseHelper {
   String urls_url = 'url';
   String urls_no_of_tries = 'no_of_tries';
   String urls_is_periodic = 'is_periodic';
+  String urls_severity = 'severity';
+  String urls_last_checked = 'last_checked';
+  String urls_status = 'status';
+  String urls_created_at = 'created_at';
+  String urls_total_failures = 'total_failures';
+  String urls_hits_since = 'hits_since';
+  String urls_network_used = 'network_used'; // mobile data, wifi, vpn etc
 
   // Logs table //////////////////////////////////////////////////////////
   String logsTable = 'logs_table';
@@ -51,7 +58,13 @@ class DatabaseHelper {
         '$urls_id INTEGER PRIMARY KEY, '
         '$urls_url TEXT, '
         '$urls_no_of_tries INTEGER, '
-        '$urls_is_periodic TEXT'
+        '$urls_is_periodic TEXT, '
+        '$urls_severity TEXT, '
+        '$urls_last_checked TEXT, '
+        '$urls_status TEXT, '
+        '$urls_created_at TEXT, '
+        '$urls_total_failures INTEGER, '
+        '$urls_hits_since INTEGER'
         ')');
 
     await db.execute('CREATE TABLE $logsTable('
