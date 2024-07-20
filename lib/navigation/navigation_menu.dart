@@ -40,27 +40,27 @@ class _NavigationMenuState extends State<NavigationMenu> {
       BottomNavigationBarItem(
           icon: Icon(Icons.home_filled,
               color: _selectedIndex == 0
-                  ? AppColors.turquoise
+                  ? AppColors.secondaryMid
                   : AppColors.grey_600),
           label: AppLocalizations.of(context)?.home),
       BottomNavigationBarItem(
           icon: Icon(Icons.link_outlined,
               color: _selectedIndex == 1
-                  ? AppColors.turquoise
+                  ? AppColors.secondaryMid
                   : AppColors.grey_600),
-          label: 'Urls'),
+          label: AppLocalizations.of(context)?.urls),
       BottomNavigationBarItem(
           icon: Icon(Icons.type_specimen,
               color: _selectedIndex == 2
-                  ? AppColors.turquoise
+                  ? AppColors.secondaryMid
                   : AppColors.grey_600),
-          label: 'Logs'),
+          label: AppLocalizations.of(context)?.logs),
       BottomNavigationBarItem(
           icon: Icon(Icons.settings,
               color: _selectedIndex == 3
-                  ? AppColors.turquoise
+                  ? AppColors.secondaryMid
                   : AppColors.grey_600),
-          label: 'Settings')
+          label: AppLocalizations.of(context)?.settings)
     ];
 
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:sol_pinger_utility/domain/entities/url.dart';
 
 abstract class HomePageEvent extends Equatable {
   const HomePageEvent();
@@ -9,4 +10,10 @@ abstract class HomePageEvent extends Equatable {
 
 class GetUrlsList extends HomePageEvent {
   const GetUrlsList();
+}
+
+class DeleteUrlFromUrlList extends HomePageEvent {
+  final int id;
+
+  const DeleteUrlFromUrlList({required this.id});
 }

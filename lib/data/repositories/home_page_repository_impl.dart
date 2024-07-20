@@ -12,4 +12,9 @@ class HomePageRepositoryImpl extends HomePageRepository {
   Future<List<UrlEntity>> getUrlList() async {
     return homePageLocalDataSource.getUrlList();
   }
+
+  @override
+  Future<bool> deleteUrlFromUrlList(int id) async {
+    return homePageLocalDataSource.deleteUrlFromUrlList(id);
+  }
 }

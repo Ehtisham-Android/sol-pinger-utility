@@ -13,5 +13,17 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
       final result = await _getUrlListUseCase.execute();
       emit(OnHomePageSuccess(result));
     });
+
+    on<DeleteUrlFromUrlList>((event, emit) async {
+      emit(OnHomePageLoading());
+
+      final deleteResult = await _getUrlListUseCase.deleteUrlFromUrlList(event.id);
+      final result = await _getUrlListUseCase.execute();
+      if(deleteResult){
+        emit(OnHomePageSuccess(result)); 
+      } else {
+        emit(OnHomePageDeleteUrlError("Something went wrong", result));
+      }
+    });
   }
 }

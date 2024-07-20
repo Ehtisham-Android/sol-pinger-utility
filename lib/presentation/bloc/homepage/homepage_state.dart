@@ -29,3 +29,13 @@ class OnHomePageError extends HomePageState {
   @override
   List<Object?> get props => [errorMessage];
 }
+
+class OnHomePageDeleteUrlError extends HomePageState {
+  final String errorMessage;
+  final List<UrlEntity> oldUrlList;
+
+  const OnHomePageDeleteUrlError(this.errorMessage, this.oldUrlList);
+
+  @override
+  List<Object?> get props => [errorMessage, oldUrlList];
+}

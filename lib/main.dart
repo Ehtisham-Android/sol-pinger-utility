@@ -12,6 +12,7 @@ import 'locator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'navigation/navigation_menu.dart';
+import 'dart:io' show Platform;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,10 @@ Future<void> main() async {
   //
   // await FirebaseHelper().initNotifications();
 
-  DartPingIOS.register();
+  if (Platform.isIOS) {
+    DartPingIOS.register();
+  }
+
   runApp(const MyApp());
 }
 

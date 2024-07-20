@@ -231,18 +231,13 @@ class DatabaseHelper {
   //   return result;
   // }
   //
-  // Future<int> deleteCartItemQty(int id) async {
-  //   var db = await database;
-  //   int result = await db
-  //       .delete(cartItemQtyTable, where: "$cart_item_id = ?", whereArgs: [id]);
-  //   return result;
-  // }
-  //
-  // Future<int> deleteAllCartItemQty() async {
-  //   var db = await database;
-  //   return await db.rawDelete("DELETE FROM $cartItemQtyTable");
-  // }
-  //
+  Future<bool> deleteUrl(int id) async {
+    var db = await database;
+    int result = await db
+        .delete(urlsTable, where: "$urls_id = ?", whereArgs: [id]);
+    return result == 1;
+  }
+
   // //DELETE METHOD ENDS /////////////////////////////////////////////////////////
   //
   // Future<List<WishListItemEntity>> getWishlistList() async {

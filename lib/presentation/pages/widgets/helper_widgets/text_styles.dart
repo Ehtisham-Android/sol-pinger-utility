@@ -621,6 +621,133 @@ Widget textTurquoiseXXXLarge(String text,
   );
 }
 
+// Turquoise TEXT //////////////////////////////////////////////////////////////////
+Widget textSecondaryDarkExtraSmall(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeExtraSmall,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkSmall(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeSmall,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkMedium(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeMedium,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textPrimaryMidMedium(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.primaryMid,
+        fontSize: FontSize.fontSizeMedium,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textPrimaryMidSmall(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.primaryMid,
+        fontSize: FontSize.fontSizeSmall,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkLarge(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeLarge,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkXLarge(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeXLarge,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkXXLarge(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeXXLarge,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
+Widget textSecondaryDarkXXXLarge(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.secondaryDark,
+        fontSize: FontSize.fontSizeXXXLarge,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
 // Red TEXT ////////////////////////////////////////////////////////////////////
 Widget textRedSmall(String text,
     {bold = false, maxLines = 1, tAlign = TextAlign.center}) {

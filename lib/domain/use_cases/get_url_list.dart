@@ -9,4 +9,8 @@ class GetUrlListUseCase {
   Future<List<UrlEntity>> execute() async {
     return await homePageRepository.getUrlList();
   }
+
+  Future<bool> deleteUrlFromUrlList(int id) async {
+    return await homePageRepository.deleteUrlFromUrlList(id);
+  }
 }

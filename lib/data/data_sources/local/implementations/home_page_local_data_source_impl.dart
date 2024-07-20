@@ -11,4 +11,9 @@ class HomePageLocalDataSourceImpl extends HomePageLocalDataSource {
   Future<List<UrlEntity>> getUrlList() async {
     return await databaseHelper.getUrlList();
   }
+
+  @override
+  Future<bool> deleteUrlFromUrlList(int id) async {
+    return await databaseHelper.deleteUrl(id);
+  }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/text_styles.dart';
 
 showDecisionDialog(BuildContext context, String message,
     {String title = 'Error', String negativeBtnTxt = 'No', String positiveBtnTxt = 'Yes',
@@ -23,7 +23,7 @@ showDecisionDialog(BuildContext context, String message,
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text(title),
-    content: Text(message),
+    content: textSecondaryDarkMedium(message, maxLines: 3),
     actions: [
       negativeButton,
       positiveButton

@@ -3,6 +3,14 @@ import 'package:flutter/material.dart';
 import 'Utils.dart';
 
 class AppColors {
+  static const primaryDark = Color(0xff482880);
+  static const primaryMid = Color(0xff673ab7);
+  static const primaryLight = Color(0xff8561c5);
+
+  static const secondaryDark = Color(0xffab003c);
+  static const secondaryMid = Color(0xfff50057);
+  static const secondaryLight = Color(0xfff73378);
+
   static const turquoise = Color(0xff45bda0);
   static const green = Color(0xff3c9432);
   static const turquoiseVariant = Color(0xff456fbd);
