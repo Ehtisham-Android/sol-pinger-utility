@@ -33,10 +33,11 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               RoundedContainer(
                   width: Dimens.iconMedium,
+                  height: Dimens.iconMedium,
                   radius: Dimens.radiusXXXLarge,
                   padding: const EdgeInsets.all(Dimens.spaceSmall),
                   backgroundColor: AppColors.primaryDark.withOpacity(0.8),
-                  child: textWhiteMedium(index.toString())),
+                  child: textWhiteSmall(index.toString())),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -80,12 +81,14 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                             style: btnPrimaryMidMedium,
                             onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
                               urlPingStatusController.pingUrl(
-                                  urlEntity, database);
+                                  urlPingStatusController.getUrl(urlEntity.id)!, database);
                             },
                             child: textPrimaryMidSmall("Ping")),
-                        hSpaceMedium(),
+                        hSpaceSmall(),
                         ElevatedButton(
                             style: btnSecondaryDarkMedium,
+                            //icon: const Icon(Icons.delete_outline, color: AppColors.white),
+                            iconAlignment: IconAlignment.end,
                             onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
                               showDecisionDialog(context,
                                   "Are you sure you want to delete\n \"${urlEntity.url}\"",
@@ -95,7 +98,20 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                                         id: urlEntity.id ?? -1));
                               });
                             },
-                            child: textWhiteSmall("Delete"))
+                            //label: textWhiteSmall("Delete")),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                textWhiteSmall("Delete"),
+                                hSpaceSmall(),
+                                const Icon(
+                                  Icons.delete_forever_rounded,
+                                  color: Colors.white,
+                                  size: 24.0,
+                                ),
+                              ],
+                            )),
+                            //child: textWhiteSmall("Delete"))
                       ]),
                     ],
                   ),

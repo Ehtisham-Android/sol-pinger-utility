@@ -73,6 +73,7 @@ class UrlPingStatusController extends GetxController {
   }
 
   UrlEntity updateUrlEntity(UrlEntity urlEntity, PingData pingData) {
+    print("Hits since: ${urlEntity.hitsSince+1}");
     var result = UrlEntity(
         id: urlEntity.id,
         url: urlEntity.url,
@@ -82,10 +83,10 @@ class UrlPingStatusController extends GetxController {
         lastChecked: getCurrentDateAndTime(),
         status: pingData.summary!.received >= 3 ? STATUSES.SUCCESS.name : STATUSES.FAILED.name,
         createdAt: urlEntity.createdAt,
-        totalFailures: pingData.summary!.received >= 3
-            ? urlEntity.totalFailures
-            : (urlEntity.totalFailures + 1),
-        hitsSince: (urlEntity.hitsSince + 1));
+        totalFailures: pingData.summary!.received < 3
+            ? (urlEntity.totalFailures + 1)
+            : urlEntity.totalFailures,
+        hitsSince: urlEntity.hitsSince+1);
 
     return result;
   }
