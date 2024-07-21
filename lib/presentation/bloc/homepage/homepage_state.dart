@@ -1,20 +1,19 @@
 import 'package:equatable/equatable.dart';
-import 'package:sol_pinger_utility/domain/entities/base.dart';
+import 'package:sol_pinger_utility/domain/entities/url.dart';
 
-
-abstract class HomepageState extends Equatable {
-  const HomepageState();
+abstract class HomePageState extends Equatable {
+  const HomePageState();
 
   @override
   List<Object?> get props => [];
 }
 
-class OnHomePageEmpty extends HomepageState {}
+class OnHomePageEmpty extends HomePageState {}
 
-class OnHomePageLoading extends HomepageState {}
+class OnHomePageLoading extends HomePageState {}
 
-class OnHomePageSuccess extends HomepageState {
-  final BaseEntity result;
+class OnHomePageSuccess extends HomePageState {
+  final List<UrlEntity> result;
 
   const OnHomePageSuccess(this.result);
 
@@ -22,11 +21,21 @@ class OnHomePageSuccess extends HomepageState {
   List<Object?> get props => [result];
 }
 
-class OnHomePageError extends HomepageState {
+class OnHomePageError extends HomePageState {
   final String errorMessage;
 
   const OnHomePageError(this.errorMessage);
 
   @override
   List<Object?> get props => [errorMessage];
+}
+
+class OnHomePageDeleteUrlError extends HomePageState {
+  final String errorMessage;
+  final List<UrlEntity> oldUrlList;
+
+  const OnHomePageDeleteUrlError(this.errorMessage, this.oldUrlList);
+
+  @override
+  List<Object?> get props => [errorMessage, oldUrlList];
 }

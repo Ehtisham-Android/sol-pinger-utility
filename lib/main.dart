@@ -12,17 +12,15 @@ import 'locator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'navigation/navigation_menu.dart';
+import 'dart:io' show Platform;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.black.withOpacity(0.002)
-    )
-  );
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.black.withOpacity(0.002)));
 
   await setupLocator();
   // await Firebase.initializeApp(
@@ -31,7 +29,10 @@ Future<void> main() async {
   //
   // await FirebaseHelper().initNotifications();
 
-  DartPingIOS.register();
+  if (Platform.isIOS) {
+    DartPingIOS.register();
+  }
+
   runApp(const MyApp());
 }
 
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => locator<HomepageBloc>()),
+        BlocProvider(create: (_) => locator<HomePageBloc>()),
       ],
       child: ChangeNotifierProvider<LocaleModel>(
         create: (context) => LocaleModel(),

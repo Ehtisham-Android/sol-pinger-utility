@@ -18,6 +18,13 @@ class DatabaseHelper {
   String urls_url = 'url';
   String urls_no_of_tries = 'no_of_tries';
   String urls_is_periodic = 'is_periodic';
+  String urls_severity = 'severity';
+  String urls_last_checked = 'last_checked';
+  String urls_status = 'status';
+  String urls_created_at = 'created_at';
+  String urls_total_failures = 'total_failures';
+  String urls_hits_since = 'hits_since';
+  String urls_network_used = 'network_used'; // mobile data, wifi, vpn etc
 
   // Logs table //////////////////////////////////////////////////////////
   String logsTable = 'logs_table';
@@ -51,7 +58,13 @@ class DatabaseHelper {
         '$urls_id INTEGER PRIMARY KEY, '
         '$urls_url TEXT, '
         '$urls_no_of_tries INTEGER, '
-        '$urls_is_periodic TEXT'
+        '$urls_is_periodic TEXT, '
+        '$urls_severity TEXT, '
+        '$urls_last_checked TEXT, '
+        '$urls_status TEXT, '
+        '$urls_created_at TEXT, '
+        '$urls_total_failures INTEGER, '
+        '$urls_hits_since INTEGER'
         ')');
 
     await db.execute('CREATE TABLE $logsTable('
@@ -218,18 +231,13 @@ class DatabaseHelper {
   //   return result;
   // }
   //
-  // Future<int> deleteCartItemQty(int id) async {
-  //   var db = await database;
-  //   int result = await db
-  //       .delete(cartItemQtyTable, where: "$cart_item_id = ?", whereArgs: [id]);
-  //   return result;
-  // }
-  //
-  // Future<int> deleteAllCartItemQty() async {
-  //   var db = await database;
-  //   return await db.rawDelete("DELETE FROM $cartItemQtyTable");
-  // }
-  //
+  Future<bool> deleteUrl(int id) async {
+    var db = await database;
+    int result = await db
+        .delete(urlsTable, where: "$urls_id = ?", whereArgs: [id]);
+    return result == 1;
+  }
+
   // //DELETE METHOD ENDS /////////////////////////////////////////////////////////
   //
   // Future<List<WishListItemEntity>> getWishlistList() async {
@@ -252,16 +260,16 @@ class DatabaseHelper {
   //   return cartItemList;
   // }
   //
-  // Future<List<CartItemQtyEntity>> getCartItemQtyList() async {
-  //   var cartItemQtyMapList = await getCartItemQtyMapList();
-  //   int count = cartItemQtyMapList.length;
-  //   List<CartItemQtyEntity> cartItemQtyList = [];
-  //   for (int index = 0; index < count; index++) {
-  //     cartItemQtyList.add(CartItemQtyEntity.fromJson(cartItemQtyMapList[index]));
-  //   }
-  //   return cartItemQtyList;
-  // }
-  //
+  Future<List<UrlEntity>> getUrlList() async {
+    var urlMapList = await getUrlsMapList();
+    int count = urlMapList.length;
+    List<UrlEntity> urlList = [];
+    for (int index = 0; index < count; index++) {
+      urlList.add(UrlEntity.fromJson(urlMapList[index]));
+    }
+    return urlList;
+  }
+
   Future<UrlEntity> getUrl(String id) async {
     var db = await database;
     var urls =

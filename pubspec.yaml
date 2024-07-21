@@ -46,10 +46,11 @@ dependencies:
   provider: ^6.0.0
   http: ^1.0.0
   equatable: ^2.0.3
-#  dartz: ^0.10.1
+  dartz: ^0.10.1
   flutter_bloc: ^8.0.1
-#  rxdart: ^0.27.3
+  rxdart: ^0.27.3
   get_it: ^7.2.0
+  get:
   flutter_localizations:
     sdk: flutter
   intl: any
@@ -62,6 +63,7 @@ dependencies:
 
   firebase_messaging: ^14.7.10
   firebase_core: ^2.24.2
+
 
 
 dev_dependencies:

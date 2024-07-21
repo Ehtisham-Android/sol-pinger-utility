@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../Utils.dart';
 
+class Constants {
+  static const pingCount = 5;
+}
+
 class Urls {
   static const currentWeatherEndpoint =
       'https://api.weatherapi.com/v1/forecast.json?key=384676e3678a47cfbe6173913230109&q=Jeddah&days=1&aqi=no&alerts=no';
