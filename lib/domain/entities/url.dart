@@ -45,8 +45,7 @@ class UrlEntity extends Equatable {
       required this.status,
       required this.createdAt,
       required this.totalFailures,
-      required this.hitsSince
-      });
+      required this.hitsSince});
 
   Map<String, dynamic> toMap() {
     return {
@@ -64,11 +63,11 @@ class UrlEntity extends Equatable {
 
   factory UrlEntity.fromMap(Map<String, dynamic> map) {
     return UrlEntity(
-        id: map['id'],
-        url: map['url'],
-        noOfTries: map['noOfTries'],
-        isPeriodic: map['isPeriodic'],
-        severity: map['severity'],
+      id: map['id'],
+      url: map['url'],
+      noOfTries: map['noOfTries'],
+      isPeriodic: map['isPeriodic'],
+      severity: map['severity'],
       lastChecked: map['lastChecked'],
       status: map['status'],
       createdAt: map['createdAt'],
@@ -78,12 +77,18 @@ class UrlEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, url, noOfTries, isPeriodic, severity,
-    lastChecked,
-    status,
-    createdAt,
-    totalFailures,
-    hitsSince];
+  List<Object?> get props => [
+        id,
+        url,
+        noOfTries,
+        isPeriodic,
+        severity,
+        lastChecked,
+        status,
+        createdAt,
+        totalFailures,
+        hitsSince
+      ];
 
   factory UrlEntity.fromJson(Map<String, dynamic> json) =>
       _$UrlEntityFromJson(json);

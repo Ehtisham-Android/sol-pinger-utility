@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dart_ping/dart_ping.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -32,103 +29,103 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
     },
     child: SizedBox(
       width: getScreenWidth(context),
-      child: Column(children: [
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          RoundedContainer(
-              width: Dimens.iconMedium,
-              radius: Dimens.radiusXXXLarge,
-              padding: const EdgeInsets.all(Dimens.spaceSmall),
-              backgroundColor: AppColors.primaryDark.withOpacity(0.8),
-              child: textWhiteMedium(index.toString())),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: Dimens.spaceMedium),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  textSecondaryDarkXLarge(urlEntity.url, bold: true),
-                  textGreyMedium(
-                      tAlign: TextAlign.start,
-                      maxLines: 2,
-                      "Last checked: ${urlEntity.lastChecked}"),
-                  textGreySmall("Created at: ${urlEntity.createdAt}"),
-                  Obx(() => urlPingStatusController.getIsLoading(urlEntity.id)
-                      ? Row(children: [
-                          textGreySmall("Pinging ..."),
-                          hSpaceMedium(),
-                          const LoadingIndicator(size: 30.0)
-                        ])
-                      : textGreySmall(urlPingStatusController
-                          .getUrl(urlEntity.id)!
-                          .status)),
-                  Row(children: [
-                    OutlinedButton(
-                        style: btnPrimaryMidMedium,
-                        onPressed: () async {
-                          urlPingStatusController.pingUrl(urlEntity, database);
-                        },
-                        child: textPrimaryMidSmall("Ping")),
-                    hSpaceMedium(),
-                    ElevatedButton(
-                        style: btnSecondaryDarkMedium,
-                        onPressed: () async {
-                          showDecisionDialog(context,
-                              "Are you sure you want to delete\n \"${urlEntity.url}\"",
-                              onPositivePressed: () {
-                            context.read<HomePageBloc>().add(
-                                DeleteUrlFromUrlList(id: urlEntity.id ?? -1));
-                          });
-                        },
-                        child: textWhiteSmall("Remove"))
-                  ]),
-                ],
+      child: Obx(() => Column(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              RoundedContainer(
+                  width: Dimens.iconMedium,
+                  radius: Dimens.radiusXXXLarge,
+                  padding: const EdgeInsets.all(Dimens.spaceSmall),
+                  backgroundColor: AppColors.primaryDark.withOpacity(0.8),
+                  child: textWhiteMedium(index.toString())),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: Dimens.spaceMedium),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      textSecondaryDarkXLarge(urlEntity.url, bold: true),
+                      textGreySmall("Created at: ${urlEntity.createdAt}"),
+                      urlPingStatusController.getIsLoading(urlEntity.id)
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                textGreyMedium("Last checked: ..."),
+                                Row(children: [
+                                  textGreySmall("Pinging ..."),
+                                  hSpaceMedium(),
+                                  const LoadingIndicator(size: 30.0)
+                                ]),
+                                textGreySmall(
+                                    "Total hits: ${urlPingStatusController.getUrl(urlEntity.id)!.hitsSince}")
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                textGreyMedium(
+                                    tAlign: TextAlign.start,
+                                    maxLines: 2,
+                                    "Last checked: ${urlPingStatusController.getUrl(urlEntity.id)!.lastChecked}"),
+                                textGreySmall(urlPingStatusController
+                                    .getUrl(urlEntity.id)!
+                                    .status, bold: true),
+                                textGreySmall(
+                                    "Total hits: ${urlPingStatusController.getUrl(urlEntity.id)!.hitsSince}")
+                              ],
+                            ),
+                      Row(children: [
+                        OutlinedButton(
+                            style: btnPrimaryMidMedium,
+                            onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
+                              urlPingStatusController.pingUrl(
+                                  urlEntity, database);
+                            },
+                            child: textPrimaryMidSmall("Ping")),
+                        hSpaceMedium(),
+                        ElevatedButton(
+                            style: btnSecondaryDarkMedium,
+                            onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
+                              showDecisionDialog(context,
+                                  "Are you sure you want to delete\n \"${urlEntity.url}\"",
+                                  onPositivePressed: () {
+                                context.read<HomePageBloc>().add(
+                                    DeleteUrlFromUrlList(
+                                        id: urlEntity.id ?? -1));
+                              });
+                            },
+                            child: textWhiteSmall("Delete"))
+                      ]),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-          // Padding(
-          //     padding:
-          //         const EdgeInsets.symmetric(horizontal: Dimens.spaceSmall),
-          //     child: textGreyExtraSmall(urlEntity.severity, bold: true)),
-          Column(children: [
-            RoundedContainer(
-                width: Dimens.iconSmall,
-                height: Dimens.iconSmall,
-                radius: Dimens.radiusXXLarge,
-                backgroundColor: getStatusColor(urlEntity))
-          ]),
-        ]),
-        vSpaceSmall(),
-        const Divider(color: AppColors.border_color)
-      ]),
+              // Padding(
+              //     padding:
+              //         const EdgeInsets.symmetric(horizontal: Dimens.spaceSmall),
+              //     child: textGreyExtraSmall(urlEntity.severity, bold: true)),
+              Column(children: [
+                RoundedContainer(
+                    width: Dimens.iconSmall,
+                    height: Dimens.iconSmall,
+                    radius: Dimens.radiusXXLarge,
+                    backgroundColor: urlPingStatusController.getIsLoading(urlEntity.id) ? getStatusColor(STATUSES.PINGING.name) :
+                    getStatusColor(urlPingStatusController.getUrl(urlEntity.id)!.status))
+              ]),
+            ]),
+            vSpaceSmall(),
+            const Divider(color: AppColors.border_color)
+          ])),
     ),
   );
 }
 
-Future<PingData> startPing(String url) async {
-  final result =
-      await Ping(url, count: 1, encoding: const Utf8Codec(allowMalformed: true))
-          .stream
-          .first;
-  return result;
-}
-
-// Future<PingData?> startPing(String url) async {
-//   // Create instance of DartPing
-//   final ping = Ping(url, count: 1);
-//   var pingData;
-//   print('Running command: ${ping.command}');
-//   ping.stream.listen((event) {
-//     pingData = event;
-//   });
-//
-//   return pingData;
-// }
-
-Color getStatusColor(UrlEntity urlEntity) {
-  if (urlEntity.status == "success") {
+Color getStatusColor(String status) {
+  if (status == STATUSES.SUCCESS.name) {
     return AppColors.green;
+  } else if (status == STATUSES.PINGING.name){
+    return AppColors.grey_500;
   }
 
   return AppColors.red;
