@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../core/AppGlobals.dart';
 import '../presentation/Pages/add_url_screen.dart';
 import '../presentation/pages/homepage/home_screen.dart';
@@ -26,6 +27,13 @@ class _NavigationMenuState extends State<NavigationMenu> {
   }
 
   void onTap(int index) {
+
+    if(index == 0){
+      WakelockPlus.enable();
+    } else {
+      WakelockPlus.disable();
+    }
+
     if (_selectedIndex != index) {
       _controller.jumpToPage(index);
       setState(() {
