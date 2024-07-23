@@ -25,5 +25,19 @@ class HomePageBloc extends Bloc<HomePageEvent, HomePageState> {
         emit(OnHomePageDeleteUrlError("Something went wrong", result));
       }
     });
+
+    // on<HitUrl>((event, emit) async {
+    //   emit(OnHomePageLoading());
+    //
+    //   final result = await _getUrlListUseCase.hitUrl(event.url);
+    //   result.fold((error) => {emit(OnHomePageError(error.message))},
+    //           (success) => {emit(OnCatalogSuccess(success))});
+    //
+    //   if(deleteResult){
+    //     emit(OnHomePageSuccess(result));
+    //   } else {
+    //     emit(OnHomePageDeleteUrlError("Something went wrong", result));
+    //   }
+    // });
   }
 }

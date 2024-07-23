@@ -692,6 +692,20 @@ Widget textPrimaryMidSmall(String text,
   );
 }
 
+Widget textPrimaryDarkMedium(String text,
+    {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
+  return Text(
+    text,
+    maxLines: maxLines,
+    overflow: TextOverflow.ellipsis,
+    textAlign: tAlign,
+    style: TextStyle(
+        color: AppColors.primaryDark,
+        fontSize: FontSize.fontSizeMedium,
+        fontWeight: bold ? FontWeight.w600 : FontWeight.normal),
+  );
+}
+
 Widget textSecondaryDarkLarge(String text,
     {bold = false, maxLines = 1, tAlign = TextAlign.center}) {
   return Text(

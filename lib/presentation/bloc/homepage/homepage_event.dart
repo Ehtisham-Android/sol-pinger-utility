@@ -17,3 +17,9 @@ class DeleteUrlFromUrlList extends HomePageEvent {
 
   const DeleteUrlFromUrlList({required this.id});
 }
+
+class HitUrl extends HomePageEvent {
+  final String url;
+
+  const HitUrl({required this.url});
+}

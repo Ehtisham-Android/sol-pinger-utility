@@ -80,7 +80,7 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                         OutlinedButton(
                             style: btnPrimaryMidMedium,
                             onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
-                              urlPingStatusController.pingUrl(
+                              urlPingStatusController.hitUrl(
                                   urlPingStatusController.getUrl(urlEntity.id)!, database);
                             },
                             child: textPrimaryMidSmall("Ping")),

@@ -32,6 +32,11 @@ class AppSharedPref {
     }
   }
 
+  int get scheduleInterval => _getData(SharedPrefsKeys.SCHEDULE_INTERVAL) ?? 1;
+
+  set scheduleInterval(int value) => _setData(SharedPrefsKeys.SCHEDULE_INTERVAL, value);
+
+
   String get fcmToken => _getData(SharedPrefsKeys.FCM_TOKEN) ?? '';
 
   set fcmToken(String value) => _setData(SharedPrefsKeys.FCM_TOKEN, value);

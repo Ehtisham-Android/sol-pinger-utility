@@ -5,8 +5,8 @@ import 'package:sol_pinger_utility/presentation/bloc/homepage/homepage_bloc.dart
 
 import 'core/constants/app_shared_prefs.dart';
 import 'core/database/db_helper.dart';
-import 'data/data_sources/contracts/local/home_page_local_data_source.dart';
-import 'data/data_sources/local/implementations/home_page_local_data_source_impl.dart';
+import 'data/data_sources/contracts/home_page_data_source.dart';
+import 'data/data_sources/local/home_page_local_data_source_impl.dart';
 import 'data/repositories/home_page_repository_impl.dart';
 import 'domain/repositories/home_page_repository.dart';
 
@@ -209,7 +209,7 @@ Future<void> setupLocator() async {
   // );
   //
   // // data source ///////////////////////////////////////////////////////////////
-  locator.registerLazySingleton<HomePageLocalDataSource>(
+  locator.registerLazySingleton<HomePageDataSource>(
     () => HomePageLocalDataSourceImpl(
       databaseHelper: locator(),
     ),

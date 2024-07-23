@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:sol_pinger_utility/core/database/db_helper.dart';
 import 'package:sol_pinger_utility/domain/entities/url.dart';
 import 'package:sol_pinger_utility/presentation/pages/homepage/url_list_item.dart';
+import 'package:http/http.dart' as http;
 
 import '../core/constants/constants.dart';
 
@@ -72,6 +73,39 @@ class UrlPingStatusController extends GetxController {
     });
   }
 
+  void hitUrl(UrlEntity urlEntity, DatabaseHelper database) async {
+    print("HitUrl called for: ${urlEntity.url}");
+    setIsLoading(urlEntity.id ?? -1, true);
+
+    try {
+      //final response = await http.get(Uri.parse('https://${formatUrl(urlEntity.url)}'));
+      final response = await http.get(Uri.parse(urlEntity.url));
+
+      var status = STATUSES.FAILED;
+      if (response.statusCode == 200) {
+        status = STATUSES.SUCCESS;
+      }
+      var result = updateUrlEntityStatus(urlEntity, status.name);
+      database.insertUrl(result);
+      addUrl(result);
+
+    } on Exception catch (exception) {
+      // only executed if error is of type Exception
+      var result = updateUrlEntityStatus(urlEntity, exception.toString());
+      database.insertUrl(result);
+      addUrl(result);
+
+    } catch (error) {
+      // executed for errors of all types other than Exception
+      var result = updateUrlEntityStatus(urlEntity, error.toString());
+      database.insertUrl(result);
+      addUrl(result);
+    }
+
+
+    setIsLoading(urlEntity.id ?? -1, false);
+  }
+
   UrlEntity updateUrlEntity(UrlEntity urlEntity, PingData pingData) {
     print("Hits since: ${urlEntity.hitsSince+1}");
     var result = UrlEntity(
@@ -84,6 +118,24 @@ class UrlPingStatusController extends GetxController {
         status: pingData.summary!.received >= 3 ? STATUSES.SUCCESS.name : STATUSES.FAILED.name,
         createdAt: urlEntity.createdAt,
         totalFailures: pingData.summary!.received < 3
+            ? (urlEntity.totalFailures + 1)
+            : urlEntity.totalFailures,
+        hitsSince: urlEntity.hitsSince+1);
+
+    return result;
+  }
+
+  UrlEntity updateUrlEntityStatus(UrlEntity urlEntity, String urlHitStatus) {
+    var result = UrlEntity(
+        id: urlEntity.id,
+        url: urlEntity.url,
+        noOfTries: urlEntity.noOfTries,
+        isPeriodic: urlEntity.isPeriodic,
+        severity: urlEntity.severity,
+        lastChecked: getCurrentDateAndTime(),
+        status: urlHitStatus,
+        createdAt: urlEntity.createdAt,
+        totalFailures: urlHitStatus == STATUSES.FAILED
             ? (urlEntity.totalFailures + 1)
             : urlEntity.totalFailures,
         hitsSince: urlEntity.hitsSince+1);

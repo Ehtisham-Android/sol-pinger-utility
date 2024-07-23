@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cron/cron.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:sol_pinger_utility/core/constants/app_shared_prefs.dart';
 import 'package:sol_pinger_utility/core/database/db_helper.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/item_space.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/loading_indicator.dart';
@@ -33,7 +36,10 @@ class HomeScreen extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     context.read<HomePageBloc>().add(const GetUrlsList());
     var database = locator<DatabaseHelper>();
+    var prefs = locator<AppSharedPref>();
     final urlPingStatusController = Get.put(UrlPingStatusController());
+    final StreamController<int> _stream = StreamController<int>();
+    var interval = prefs.scheduleInterval;
 
     return BlocBuilder<HomePageBloc, HomePageState>(
         builder: (BuildContext context, state) {
@@ -47,18 +53,34 @@ class HomeScreen extends StatelessWidget {
             child: Padding(
                 padding: const EdgeInsets.all(Dimens.screenPadding),
                 child: Column(children: [
-                  ElevatedButton(
-                      onPressed: () async {
-                        Cron().schedule(Schedule.parse('*/1 * * * *'),
-                            () async {
-                                //print('every 0.5 minutes');
-                              for(var url in urlList){
-                                urlPingStatusController.pingUrl(
-                                    urlPingStatusController.getUrl(url.id)!, database);
-                              }
-                        });
+                  Row(children: [
+                    StreamBuilder<int>(
+                      stream: _stream.stream,
+                      initialData: interval * 60,
+                      builder: (context, snapshot) {
+                        if(snapshot.data != (interval * 60)){
+                          return textSecondaryDarkMedium(
+                              'Next ping after: ${snapshot.data} sec');
+                        }
+
+                        return Container();
                       },
-                      child: textPrimaryMidMedium("Start cron")),
+                    ),
+                    const Spacer(),
+                    ElevatedButton(
+                        onPressed: urlList.isNotEmpty ? () async {
+                          Cron().schedule(Schedule.parse('*/$interval * * * *'),
+                              () async {
+                            for (var url in urlList) {
+                              urlPingStatusController.hitUrl(
+                                  urlPingStatusController.getUrl(url.id)!,
+                                  database);
+                            }
+                          });
+                          startTimer(interval, _stream);
+                        } : null,
+                        child: textPrimaryMidMedium("Start pinging")),
+                  ]),
                   vSpaceMedium(),
                   Expanded(child: UrlsList(database, urlList))
                 ])));
@@ -75,6 +97,22 @@ class HomeScreen extends StatelessWidget {
       }
 
       return Container();
+    });
+  }
+
+  void startTimer(int timeInMinutes, StreamController<int> streamController) {
+    var counter = timeInMinutes * 60;
+    final totalTime = counter;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      //print(timer.tick);
+
+      counter--;
+      streamController.add(counter);
+      if (counter == 0) {
+        print('Cancel timer');
+        counter = totalTime;
+        //timer.cancel();
+      }
     });
   }
 }
