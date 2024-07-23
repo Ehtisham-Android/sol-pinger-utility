@@ -17,7 +17,7 @@ class DatabaseHelper {
   String urls_id = 'id';
   String urls_url = 'url';
   String urls_no_of_tries = 'no_of_tries';
-  String urls_is_periodic = 'is_periodic';
+  String urls_is_halt = 'is_halt';
   String urls_severity = 'severity';
   String urls_last_checked = 'last_checked';
   String urls_status = 'status';
@@ -58,7 +58,7 @@ class DatabaseHelper {
         '$urls_id INTEGER PRIMARY KEY, '
         '$urls_url TEXT, '
         '$urls_no_of_tries INTEGER, '
-        '$urls_is_periodic TEXT, '
+        '$urls_is_halt INTEGER, '
         '$urls_severity TEXT, '
         '$urls_last_checked TEXT, '
         '$urls_status TEXT, '

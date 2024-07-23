@@ -14,6 +14,12 @@ class UrlPingStatusController extends GetxController {
   var urls = <String, UrlEntity>{}.obs;
   var loading = <String, bool>{}.obs;
 
+  List<UrlEntity> getUrls() {
+    List<UrlEntity> urlList = [];
+    urls.forEach((key, value) => urlList.add(value));
+    return urlList;
+  }
+
   void addUrl(UrlEntity item) {
     urls[item.id.toString()] = item;
   }
@@ -51,19 +57,19 @@ class UrlPingStatusController extends GetxController {
     ping.stream.listen((event) {
       print(event);
       count++;
-      if(count == (Constants.pingCount + 1)){
+      if (count == (Constants.pingCount + 1)) {
         if (event.summary != null) {
           var result = updateUrlEntity(urlEntity, event);
           database.insertUrl(result);
           addUrl(result);
-        } else if (event.error != null){
+        } else if (event.error != null) {
           var result = updateErrorUrlEntity(urlEntity, event.error?.error);
           database.insertUrl(result);
           addUrl(result);
         }
         setIsLoading(urlEntity.id ?? -1, false);
       } else {
-        if (event.error != null){
+        if (event.error != null) {
           var result = updateErrorUrlEntity(urlEntity, event.error?.error);
           database.insertUrl(result);
           addUrl(result);
@@ -88,13 +94,11 @@ class UrlPingStatusController extends GetxController {
       var result = updateUrlEntityStatus(urlEntity, status.name);
       database.insertUrl(result);
       addUrl(result);
-
     } on Exception catch (exception) {
       // only executed if error is of type Exception
       var result = updateUrlEntityStatus(urlEntity, exception.toString());
       database.insertUrl(result);
       addUrl(result);
-
     } catch (error) {
       // executed for errors of all types other than Exception
       var result = updateUrlEntityStatus(urlEntity, error.toString());
@@ -102,25 +106,26 @@ class UrlPingStatusController extends GetxController {
       addUrl(result);
     }
 
-
     setIsLoading(urlEntity.id ?? -1, false);
   }
 
   UrlEntity updateUrlEntity(UrlEntity urlEntity, PingData pingData) {
-    print("Hits since: ${urlEntity.hitsSince+1}");
+    print("Hits since: ${urlEntity.hitsSince + 1}");
     var result = UrlEntity(
         id: urlEntity.id,
         url: urlEntity.url,
         noOfTries: urlEntity.noOfTries,
-        isPeriodic: urlEntity.isPeriodic,
+        isHalt: urlEntity.isHalt,
         severity: urlEntity.severity,
         lastChecked: getCurrentDateAndTime(),
-        status: pingData.summary!.received >= 3 ? STATUSES.SUCCESS.name : STATUSES.FAILED.name,
+        status: pingData.summary!.received >= 3
+            ? STATUSES.SUCCESS.name
+            : STATUSES.FAILED.name,
         createdAt: urlEntity.createdAt,
         totalFailures: pingData.summary!.received < 3
             ? (urlEntity.totalFailures + 1)
             : urlEntity.totalFailures,
-        hitsSince: urlEntity.hitsSince+1);
+        hitsSince: urlEntity.hitsSince + 1);
 
     return result;
   }
@@ -130,7 +135,7 @@ class UrlPingStatusController extends GetxController {
         id: urlEntity.id,
         url: urlEntity.url,
         noOfTries: urlEntity.noOfTries,
-        isPeriodic: urlEntity.isPeriodic,
+        isHalt: urlEntity.isHalt,
         severity: urlEntity.severity,
         lastChecked: getCurrentDateAndTime(),
         status: urlHitStatus,
@@ -138,7 +143,7 @@ class UrlPingStatusController extends GetxController {
         totalFailures: urlHitStatus == STATUSES.FAILED
             ? (urlEntity.totalFailures + 1)
             : urlEntity.totalFailures,
-        hitsSince: urlEntity.hitsSince+1);
+        hitsSince: urlEntity.hitsSince + 1);
 
     return result;
   }
@@ -148,7 +153,7 @@ class UrlPingStatusController extends GetxController {
         id: urlEntity.id,
         url: urlEntity.url,
         noOfTries: urlEntity.noOfTries,
-        isPeriodic: urlEntity.isPeriodic,
+        isHalt: urlEntity.isHalt,
         severity: urlEntity.severity,
         lastChecked: getCurrentDateAndTime(),
         status: error?.name ?? STATUSES.FAILED.name,
@@ -157,6 +162,24 @@ class UrlPingStatusController extends GetxController {
         hitsSince: (urlEntity.hitsSince + 1));
 
     return result;
+  }
+
+  Future<bool> haltUrlEntity(
+      UrlEntity urlEntity, DatabaseHelper database) async {
+    var result = UrlEntity(
+        id: urlEntity.id,
+        url: urlEntity.url,
+        noOfTries: urlEntity.noOfTries,
+        isHalt: urlEntity.isHalt == 1 ? 0 : 1,
+        severity: urlEntity.severity,
+        lastChecked: getCurrentDateAndTime(),
+        status: urlEntity.status,
+        createdAt: urlEntity.createdAt,
+        totalFailures: urlEntity.totalFailures,
+        hitsSince: urlEntity.hitsSince);
+
+    addUrl(result);
+    return await database.insertUrl(result) == 1;
   }
 
   Future<PingData> startPing(String url) async {
@@ -184,8 +207,4 @@ class UrlPingStatusController extends GetxController {
   }
 }
 
-enum STATUSES {
-  SUCCESS,
-  FAILED,
-  PINGING
-}
+enum STATUSES { SUCCESS, FAILED, PINGING }

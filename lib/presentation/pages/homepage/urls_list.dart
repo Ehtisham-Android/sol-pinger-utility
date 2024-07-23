@@ -3,11 +3,9 @@ import 'package:get/get.dart';
 import 'package:sol_pinger_utility/core/database/db_helper.dart';
 import 'package:sol_pinger_utility/domain/entities/url.dart';
 import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/item_space.dart';
-import 'package:sol_pinger_utility/presentation/Pages/widgets/helper_widgets/text_styles.dart';
 import 'package:sol_pinger_utility/presentation/pages/homepage/url_list_item.dart';
 
 import '../../../controllers/url_ping_status_controller.dart';
-import '../../../core/constants/constants.dart';
 
 class UrlsList extends StatelessWidget {
   final List<UrlEntity> urls;

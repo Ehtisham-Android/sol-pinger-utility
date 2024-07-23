@@ -11,18 +11,17 @@ import 'package:sol_pinger_utility/presentation/pages/widgets/helper_widgets/sna
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:sol_pinger_utility/presentation/pages/widgets/helper_widgets/text_styles.dart';
 
-import '../../core/AppGlobals.dart';
-import '../../core/constants/constants.dart';
-import 'widgets/helper_widgets/toggle_button.dart';
-
-String selectedUrlType = "";
+import '../../../core/AppGlobals.dart';
+import '../../../core/constants/constants.dart';
+import '../widgets/helper_widgets/toggle_button.dart';
 
 class AddUrlScreen extends StatelessWidget {
   const AddUrlScreen({required this.goBack, super.key});
 
   final void Function(int) goBack;
 
-  void addUrl(BuildContext context, TextEditingController controller, String urlType) async {
+  void addUrl(BuildContext context, TextEditingController controller,
+      String urlType) async {
     if (controller.text.isEmpty) {
       showPostFrameSnackBar(context, "Please enter a valid URL");
     } else {
@@ -32,7 +31,7 @@ class AddUrlScreen extends StatelessWidget {
       final urlEntity = UrlEntity(
           url: formatUrl(urlType + controller.text),
           noOfTries: 3,
-          isPeriodic: "1",
+          isHalt: 0,
           severity: 'critical',
           lastChecked: '',
           status: 'Just added',
@@ -49,8 +48,12 @@ class AddUrlScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller = TextEditingController(text: '');
-    final urlType = ["http://", "https://"];
-    final urlTypeWidgetList = [textPrimaryDarkMedium("http"), textPrimaryDarkMedium("https")];
+    final urlType = ["https://", "http://"];
+    final urlTypeWidgetList = [
+      textPrimaryDarkMedium("https"),
+      textPrimaryDarkMedium("http")
+    ];
+    String selectedUrlType = "https://";
 
     return Scaffold(
       appBar: mainAppBar(AppLocalizations.of(context)?.appName ?? "Sol Pinger"),
@@ -58,7 +61,13 @@ class AddUrlScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            ToggleButtonsSample(list: urlTypeWidgetList, values: urlType),
+            ToggleButtonsSample(
+              list: urlTypeWidgetList,
+              values: urlType,
+              onToggleChanged: (selectedValue) {
+                selectedUrlType = selectedValue;
+              },
+            ),
             Padding(
               padding: const EdgeInsets.all(24.0),
               child: TextFormField(
@@ -66,8 +75,7 @@ class AddUrlScreen extends StatelessWidget {
                 keyboardType: TextInputType.url,
                 maxLength: 200,
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primaryDark),
+                    fontWeight: FontWeight.bold, color: AppColors.primaryDark),
                 //onChanged: onChanged,
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
@@ -79,8 +87,8 @@ class AddUrlScreen extends StatelessWidget {
                     fillColor: AppColors.grey_200,
                     border: OutlineInputBorder(
                         borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(
-                            Dimens.radiusXXXLarge)),
+                        borderRadius:
+                            BorderRadius.circular(Dimens.radiusXXXLarge)),
                     hintText: 'Type url here ...',
                     hintStyle: const TextStyle(
                         fontWeight: FontWeight.normal,

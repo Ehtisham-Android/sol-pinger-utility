@@ -21,6 +21,15 @@ class OnHomePageSuccess extends HomePageState {
   List<Object?> get props => [result];
 }
 
+class OnHomePageUpdate extends HomePageState {
+  final List<UrlEntity> result;
+
+  const OnHomePageUpdate(this.result);
+
+  @override
+  List<Object?> get props => [result];
+}
+
 class OnHomePageError extends HomePageState {
   final String errorMessage;
 

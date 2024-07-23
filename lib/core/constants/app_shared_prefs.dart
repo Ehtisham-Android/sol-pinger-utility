@@ -15,7 +15,7 @@ class AppSharedPref {
   }
 
   dynamic _getData(String key) {
-    return _preferences.getString(key);
+    return _preferences.get(key);
   }
 
   dynamic _setData(String key, dynamic value) {

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:sol_pinger_utility/core/AppGlobals.dart';
 
-import '../../add_url_screen.dart';
-
 class ToggleButtonsSample extends StatefulWidget {
-  const ToggleButtonsSample({super.key, required this.list, required this.values});
+  const ToggleButtonsSample({super.key, required this.list, required this.values, required this.onToggleChanged});
 
   final List<Widget> list;
   final List<String> values;
+  final Function(String) onToggleChanged;
 
   @override
   State<ToggleButtonsSample> createState() => _ToggleButtonsSampleState();
@@ -15,15 +14,21 @@ class ToggleButtonsSample extends StatefulWidget {
 
 class _ToggleButtonsSampleState extends State<ToggleButtonsSample> {
   bool vertical = false;
-  final List<bool> selectedItem = <bool>[true, false];
+  late final List<bool> selectedItem; // = <bool>[true, false];
 
-  // List<bool> populateSelectedList() {
-  //   List<bool> result = [];
-  //   widget.list.asMap().forEach((index, item) {
-  //     result.add(index == 0);
-  //   });
-  //   return result;
-  // }
+  @override
+  void initState() {
+    super.initState();
+    selectedItem = populateSelectedList();
+  }
+
+  List<bool> populateSelectedList() {
+    List<bool> result = [];
+    widget.list.asMap().forEach((index, item) {
+      result.add(index == 0);
+    });
+    return result;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class _ToggleButtonsSampleState extends State<ToggleButtonsSample> {
               setState(() {
                 for (int i = 0; i < selectedItem.length; i++) {
                   selectedItem[i] = i == index;
-                  selectedUrlType = widget.values[index];
+                  widget.onToggleChanged(widget.values[index]);
                 }
               });
             },

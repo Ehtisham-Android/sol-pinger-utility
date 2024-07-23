@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:sol_pinger_utility/domain/entities/url.dart';
 
 abstract class HomePageEvent extends Equatable {
   const HomePageEvent();
