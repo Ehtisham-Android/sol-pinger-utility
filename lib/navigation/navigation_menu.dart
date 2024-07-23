@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:sol_pinger_utility/presentation/pages/logs/logs_screen.dart';
+import 'package:sol_pinger_utility/presentation/pages/settings/settings_screen.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../core/AppGlobals.dart';
-import '../presentation/Pages/add_url_screen.dart';
+import '../presentation/pages/add_url/add_url_screen.dart';
 import '../presentation/pages/homepage/home_screen.dart';
 
 class NavigationMenu extends StatefulWidget {
@@ -22,10 +25,19 @@ class _NavigationMenuState extends State<NavigationMenu> {
     list = [
       const HomeScreen(),
       AddUrlScreen(goBack: onTap),
+      const LogsScreen(),
+      SettingsScreen(goBack: onTap),
     ];
   }
 
   void onTap(int index) {
+
+    if(index == 0){
+      WakelockPlus.enable();
+    } else {
+      WakelockPlus.disable();
+    }
+
     if (_selectedIndex != index) {
       _controller.jumpToPage(index);
       setState(() {
@@ -44,11 +56,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   : AppColors.grey_600),
           label: AppLocalizations.of(context)?.home),
       BottomNavigationBarItem(
-          icon: Icon(Icons.link_outlined,
+          icon: Icon(Icons.add_link,
               color: _selectedIndex == 1
                   ? AppColors.secondaryMid
                   : AppColors.grey_600),
-          label: AppLocalizations.of(context)?.urls),
+          label: AppLocalizations.of(context)?.add_url),
       BottomNavigationBarItem(
           icon: Icon(Icons.type_specimen,
               color: _selectedIndex == 2

@@ -1,4 +1,9 @@
 class SharedPrefsKeys {
+  // SOL
+  static const SCHEDULE_INTERVAL = "schedule_interval";
+  static const IS_ALWAYS_ON = "is_always_on";
+
+
   static const FCM_TOKEN = "fcm_token";
 
   static const STORE_NAME = "storeName"; // English, Arabic

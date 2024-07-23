@@ -143,6 +143,7 @@
   "loading_fifo_ai": "Loading FIFO AI",
   "start_conversation": "Start Conversation",
   "urls": "Urls",
+  "add_url": "Add url",
   "logs": "Logs",
   "settings": "Settings"
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 bool validatePhoneNumber(String phoneNumber) {
   return phoneNumber.length == 10 && phoneNumber.startsWith('05');
@@ -28,4 +29,29 @@ bool isDarkMode(BuildContext context) {
 
 int totalPages(int totalCount, int pageSize) {
   return (totalCount / pageSize).ceil();
+}
+
+String formatUrl(String url){
+  var result = url;
+
+  result = result.removeAllWhitespace;
+  //result = result.replaceAll(RegExp(r'http://'), '');
+  //result = result.replaceAll(RegExp(r'https://'), '');
+  result = result.replaceAll(RegExp(r'www.'), '');
+
+  return result;
+}
+
+bool validateUrl(String email) {
+  final emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  return emailRegex.hasMatch(email);
+}
+
+String formatTime(Duration duration) {
+  String negativeSign = duration.isNegative ? '-' : '';
+  String twoDigits(int n) => n.toString().padLeft(2, "0");
+  String twoDigitMinutes = twoDigits(duration.inMinutes.remainder(60).abs());
+  String twoDigitSeconds = twoDigits(duration.inSeconds.remainder(60).abs());
+  return "$negativeSign${twoDigits(duration.inHours)}:$twoDigitMinutes:$twoDigitSeconds";
 }

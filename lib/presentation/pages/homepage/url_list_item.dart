@@ -69,9 +69,11 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                                     tAlign: TextAlign.start,
                                     maxLines: 2,
                                     "Last checked: ${urlPingStatusController.getUrl(urlEntity.id)!.lastChecked}"),
-                                textGreySmall(urlPingStatusController
-                                    .getUrl(urlEntity.id)!
-                                    .status, bold: true),
+                                textGreySmall(
+                                    urlPingStatusController
+                                        .getUrl(urlEntity.id)!
+                                        .status,
+                                    bold: true),
                                 textGreySmall(
                                     "Total hits: ${urlPingStatusController.getUrl(urlEntity.id)!.hitsSince}")
                               ],
@@ -79,39 +81,85 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                       Row(children: [
                         OutlinedButton(
                             style: btnPrimaryMidMedium,
-                            onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
-                              urlPingStatusController.pingUrl(
-                                  urlPingStatusController.getUrl(urlEntity.id)!, database);
-                            },
+                            onPressed: urlPingStatusController
+                                    .getIsLoading(urlEntity.id)
+                                ? null
+                                : () async {
+                                    urlPingStatusController.hitUrl(
+                                        urlPingStatusController
+                                            .getUrl(urlEntity.id)!,
+                                        database);
+                                  },
                             child: textPrimaryMidSmall("Ping")),
                         hSpaceSmall(),
-                        ElevatedButton(
-                            style: btnSecondaryDarkMedium,
-                            //icon: const Icon(Icons.delete_outline, color: AppColors.white),
-                            iconAlignment: IconAlignment.end,
-                            onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
-                              showDecisionDialog(context,
-                                  "Are you sure you want to delete\n \"${urlEntity.url}\"",
-                                  onPositivePressed: () {
-                                context.read<HomePageBloc>().add(
-                                    DeleteUrlFromUrlList(
-                                        id: urlEntity.id ?? -1));
-                              });
+                        OutlinedButton(
+                            style: btnPrimaryMidMedium,
+                            onPressed: () async {
+                              urlPingStatusController.haltUrlEntity(
+                                  urlPingStatusController.getUrl(urlEntity.id)!,
+                                  database);
                             },
-                            //label: textWhiteSmall("Delete")),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                textWhiteSmall("Delete"),
-                                hSpaceSmall(),
-                                const Icon(
-                                  Icons.delete_forever_rounded,
-                                  color: Colors.white,
-                                  size: 24.0,
-                                ),
-                              ],
-                            )),
-                            //child: textWhiteSmall("Delete"))
+                            child: textPrimaryMidSmall(urlPingStatusController
+                                        .getUrl(urlEntity.id)!
+                                        .isHalt ==
+                                    1
+                                ? "Un-Halt"
+                                : "Halt")),
+                        hSpaceMedium(),
+                        RoundedContainer(
+                          backgroundColor: AppColors.grey_300,
+                          radius: Dimens.radiusXXLarge,
+                          height: 40,
+                          width: 42,
+                          child: IconButton(
+                            iconSize: 24,
+                            icon: const Icon(
+                              Icons.delete_forever_rounded,
+                              color: AppColors.secondaryDark,
+                            ),
+                            // the method which is called
+                            // when button is pressed
+                            onPressed:
+                                urlPingStatusController.getIsLoading(urlEntity.id)
+                                    ? null
+                                    : () async {
+                                        showDecisionDialog(context,
+                                            "Are you sure you want to delete\n \"${urlEntity.url}\"",
+                                            onPositivePressed: () {
+                                          context.read<HomePageBloc>().add(
+                                              DeleteUrlFromUrlList(
+                                                  id: urlEntity.id ?? -1));
+                                        });
+                                      },
+                          ),
+                        ),
+                        // ElevatedButton(
+                        //     style: btnSecondaryDarkMedium,
+                        //     //icon: const Icon(Icons.delete_outline, color: AppColors.white),
+                        //     iconAlignment: IconAlignment.end,
+                        //     onPressed: urlPingStatusController.getIsLoading(urlEntity.id) ? null : () async {
+                        //       showDecisionDialog(context,
+                        //           "Are you sure you want to delete\n \"${urlEntity.url}\"",
+                        //           onPositivePressed: () {
+                        //         context.read<HomePageBloc>().add(
+                        //             DeleteUrlFromUrlList(
+                        //                 id: urlEntity.id ?? -1));
+                        //       });
+                        //     },
+                        //     //label: textWhiteSmall("Delete")),
+                        //     child: Row(
+                        //       mainAxisAlignment: MainAxisAlignment.center,
+                        //       children: <Widget>[
+                        //         textWhiteSmall("Delete"),
+                        //         hSpaceSmall(),
+                        //         const Icon(
+                        //           Icons.delete_forever_rounded,
+                        //           color: Colors.white,
+                        //           size: 24.0,
+                        //         ),
+                        //       ],
+                        //     )),
+                        //child: textWhiteSmall("Delete"))
                       ]),
                     ],
                   ),
@@ -126,8 +174,12 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
                     width: Dimens.iconSmall,
                     height: Dimens.iconSmall,
                     radius: Dimens.radiusXXLarge,
-                    backgroundColor: urlPingStatusController.getIsLoading(urlEntity.id) ? getStatusColor(STATUSES.PINGING.name) :
-                    getStatusColor(urlPingStatusController.getUrl(urlEntity.id)!.status))
+                    backgroundColor:
+                        urlPingStatusController.getIsLoading(urlEntity.id)
+                            ? getStatusColor(STATUSES.PINGING.name)
+                            : getStatusColor(urlPingStatusController
+                                .getUrl(urlEntity.id)!
+                                .status))
               ]),
             ]),
             vSpaceSmall(),
@@ -140,7 +192,7 @@ Widget urlListItem(BuildContext context, UrlEntity urlEntity,
 Color getStatusColor(String status) {
   if (status == STATUSES.SUCCESS.name) {
     return AppColors.green;
-  } else if (status == STATUSES.PINGING.name){
+  } else if (status == STATUSES.PINGING.name) {
     return AppColors.grey_500;
   }
 

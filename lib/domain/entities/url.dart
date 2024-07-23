@@ -14,8 +14,8 @@ class UrlEntity extends Equatable {
   @JsonKey(name: "no_of_tries")
   final int noOfTries;
 
-  @JsonKey(name: "is_periodic")
-  final String isPeriodic;
+  @JsonKey(name: "is_halt")
+  final int isHalt;
 
   @JsonKey(name: "severity")
   final String severity;
@@ -39,7 +39,7 @@ class UrlEntity extends Equatable {
       {this.id,
       required this.url,
       required this.noOfTries,
-      required this.isPeriodic,
+      required this.isHalt,
       required this.severity,
       required this.lastChecked,
       required this.status,
@@ -51,7 +51,7 @@ class UrlEntity extends Equatable {
     return {
       'url': url,
       'noOfTries': noOfTries,
-      'isPeriodic': isPeriodic,
+      'isHalt': isHalt,
       'severity': severity,
       'lastChecked': lastChecked,
       'status': status,
@@ -66,7 +66,7 @@ class UrlEntity extends Equatable {
       id: map['id'],
       url: map['url'],
       noOfTries: map['noOfTries'],
-      isPeriodic: map['isPeriodic'],
+      isHalt: map['isHalt'],
       severity: map['severity'],
       lastChecked: map['lastChecked'],
       status: map['status'],
@@ -81,7 +81,7 @@ class UrlEntity extends Equatable {
         id,
         url,
         noOfTries,
-        isPeriodic,
+        isHalt,
         severity,
         lastChecked,
         status,

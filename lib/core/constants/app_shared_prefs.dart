@@ -15,7 +15,7 @@ class AppSharedPref {
   }
 
   dynamic _getData(String key) {
-    return _preferences.getString(key);
+    return _preferences.get(key);
   }
 
   dynamic _setData(String key, dynamic value) {
@@ -31,6 +31,11 @@ class AppSharedPref {
       _preferences.setStringList(key, value);
     }
   }
+
+  int get scheduleInterval => _getData(SharedPrefsKeys.SCHEDULE_INTERVAL) ?? 1;
+
+  set scheduleInterval(int value) => _setData(SharedPrefsKeys.SCHEDULE_INTERVAL, value);
+
 
   String get fcmToken => _getData(SharedPrefsKeys.FCM_TOKEN) ?? '';
 

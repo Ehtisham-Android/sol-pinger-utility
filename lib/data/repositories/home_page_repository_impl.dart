@@ -1,10 +1,12 @@
+import 'package:dartz/dartz.dart';
+import 'package:sol_pinger_utility/core/errors/failure.dart';
 import 'package:sol_pinger_utility/domain/entities/url.dart';
 import 'package:sol_pinger_utility/domain/repositories/home_page_repository.dart';
 
-import '../data_sources/contracts/local/home_page_local_data_source.dart';
+import '../data_sources/contracts/home_page_data_source.dart';
 
 class HomePageRepositoryImpl extends HomePageRepository {
-  final HomePageLocalDataSource homePageLocalDataSource;
+  final HomePageDataSource homePageLocalDataSource;
 
   HomePageRepositoryImpl({required this.homePageLocalDataSource});
 
@@ -16,5 +18,11 @@ class HomePageRepositoryImpl extends HomePageRepository {
   @override
   Future<bool> deleteUrlFromUrlList(int id) async {
     return homePageLocalDataSource.deleteUrlFromUrlList(id);
+  }
+
+  @override
+  Future<Either<Failure, dynamic>> hitUrl(String url) {
+    // TODO: implement hitUrl
+    throw UnimplementedError();
   }
 }
